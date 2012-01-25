@@ -1,9 +1,9 @@
 /*	
-*	Weever Maps Geotagger, for Joomla
+*	Weever Geotagger Core 
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.1
+*	Version: 	0.2
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -42,8 +42,6 @@ if(!Array.prototype.indexOf){
     }
 }
 
-
-var wmx = wmx || {};
 
 wmx.addMarker = function(position, address, labelContent, icon) {
 
@@ -182,7 +180,7 @@ wmx.getGeocode = function(address, callback) {
    				
    			if(status == "ZERO_RESULTS")
    			{
-   				alert(Joomla.JText._('WEEVERMAPS_ERROR_NO_RESULTS')+address);
+   				alert(wmx._txt('WEEVERMAPS_ERROR_NO_RESULTS')+address);
    			}
    		
    		}
@@ -276,12 +274,12 @@ wmx.newMarkerImage = function(spriteUrl) {
 
 wmx.getSettings = function() {
 
-	var latitude 	= '#pluginsweevermapsk2latitude_item',
-		longitude 	= '#pluginsweevermapsk2longitude_item',
-		address	 	= '#pluginsweevermapsk2address_item',
-		label 		= '#pluginsweevermapsk2label_item',
-		markerId 	= '#pluginsweevermapsk2marker_item',
-		kml 		= '#pluginsweevermapsk2kml_item',
+	var latitude 	= wmx.inputField.latitude,
+		longitude 	= wmx.inputField.longitude,
+		address	 	= wmx.inputField.address,
+		label 		= wmx.inputField.label,
+		markerId 	= wmx.inputField.marker,
+		kml 		= wmx.inputField.kml,
 		_dl 		= ";";
 		
 	jQuery('#wmx-kml-url').val( jQuery( kml ).val() );
@@ -310,12 +308,12 @@ wmx.saveSettings = function() {
 	if(wmx.markers === undefined)
 		return true;
 		
-	var latitude 	= '#pluginsweevermapsk2latitude_item',
-		longitude 	= '#pluginsweevermapsk2longitude_item',
-		address	 	= '#pluginsweevermapsk2address_item',
-		label 		= '#pluginsweevermapsk2label_item',
-		markerId 	= '#pluginsweevermapsk2marker_item',
-		kml 		= '#pluginsweevermapsk2kml_item',
+	var latitude 	= wmx.inputField.latitude,
+		longitude 	= wmx.inputField.longitude,
+		address	 	= wmx.inputField.address,
+		label 		= wmx.inputField.label,
+		markerId 	= wmx.inputField.marker,
+		kml 		= wmx.inputField.kml,
 		_dl 		= ";",
 		latVal = "", longVal = "", addVal = "", labelVal = "", markVal = "";
 
@@ -346,46 +344,4 @@ wmx.saveSettings = function() {
 }
 
 
-// override the K2 media update function
 
-var _elFinderUpdate = elFinderUpdate;
-
-var elFinderUpdate = function(fieldID, value) {
-	
-	if(fieldID == 'wmx-marker-url') {
-	
-		var image = "/"+value;
-	
-		wmx.mapImages.icon = new google.maps.MarkerImage(
-		                image,
-		                new google.maps.Size(32, 37),
-		                new google.maps.Point(0,0),
-		                new google.maps.Point(16, 37),
-		                new google.maps.Size(64, 37)
-		              );
-		              
-		jQuery('#wmx-marker-image').attr('src', image); 
-		
-		_elFinderUpdate(fieldID, value);
-	
-	} else if (fieldID == 'wmx-marker-icon') {
-	
-		wmx.selectedMarker.setIcon(	
-			new google.maps.MarkerImage(
-		        "/"+value,
-		        new google.maps.Size(32, 37),
-		        new google.maps.Point(0,0),
-		        new google.maps.Point(16, 37),
-		        new google.maps.Size(64, 37)
-		   )
-		);
-		
-		_elFinderUpdate(fieldID, value);
-	
-	} else {
-	
-		_elFinderUpdate(fieldID, value);
-	
-	}
-
-};

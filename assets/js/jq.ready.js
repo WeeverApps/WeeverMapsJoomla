@@ -1,9 +1,9 @@
 /*	
-*	Weever Maps Geotagger, for Joomla
+*	Weever Geotagger Core
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.1
+*	Version: 	0.2
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -21,41 +21,7 @@
 
 
 jQuery(document).ready(function(){ 
- 
-	jQuery('#wmx-select-marker').click(function(event){
-		event.preventDefault();
-		SqueezeBox.initialize();
-		SqueezeBox.fromElement(this, {
-			handler: 'iframe',
-			url: K2BasePath+'index.php?option=com_k2&view=media&type=image&tmpl=component&fieldID=wmx-marker-url',
-			size: {x: 800, y: 434}
-		});
-	});
-	
-	
-
-	jQuery('#wmx-marker-change-icon').click(function(event){
-		event.preventDefault();
-		SqueezeBox.initialize();
-		SqueezeBox.fromElement(this, {
-			handler: 'iframe',
-			url: K2BasePath+'index.php?option=com_k2&view=media&type=image&tmpl=component&fieldID=wmx-marker-icon',
-			size: {x: 800, y: 434}
-		});
-	});
-	
-	/*
-	jQuery('#wmx-kml-media').click(function(event){
-		event.preventDefault();
-		SqueezeBox.initialize();
-		SqueezeBox.fromElement(this, {
-			handler: 'iframe',
-			url: K2BasePath+'index.php?option=com_k2&view=media&type=image&tmpl=component&fieldID=wmx-kml-url',
-			size: {x: 800, y: 434}
-		});
-	});*/
-
-				
+ 			
 	jQuery('#wmx-address-geocode').click(function(event){
 	
 		wmx.address = jQuery('input#wmx-address-input').val();
@@ -337,7 +303,7 @@ jQuery(document).ready(function(){
 			beforeClose: function() {
 			
 				if(wmx.safeClose == undefined || wmx.safeClose == false)
-					return confirm(Joomla.JText._('WEEVERMAPS_CONFIRM_CLOSE'));
+					return confirm(wmx._txt('WEEVERMAPS_CONFIRM_CLOSE'));
 			
 			}
 		}); 

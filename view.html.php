@@ -26,6 +26,7 @@ defined('_JEXEC') or die;
 	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery-ui.js' );
 	$document->addScript( 'http://maps.googleapis.com/maps/api/js?sensor=false' );
 	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'markerwithlabel.js' );
+	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.ini.js' );
 	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.js' );
 	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.ready.js' );
 
