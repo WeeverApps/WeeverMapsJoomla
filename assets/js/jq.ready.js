@@ -337,7 +337,7 @@ jQuery(document).ready(function(){
 			beforeClose: function() {
 			
 				if(wmx.safeClose == undefined || wmx.safeClose == false)
-					return confirm(Joomla.JText._('WEEVERMAPSK2_CONFIRM_CLOSE'));
+					return confirm(Joomla.JText._('WEEVERMAPS_CONFIRM_CLOSE'));
 			
 			}
 		}); 

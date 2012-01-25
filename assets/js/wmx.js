@@ -182,7 +182,7 @@ wmx.getGeocode = function(address, callback) {
    				
    			if(status == "ZERO_RESULTS")
    			{
-   				alert(Joomla.JText._('WEEVERMAPSK2_ERROR_NO_RESULTS')+address);
+   				alert(Joomla.JText._('WEEVERMAPS_ERROR_NO_RESULTS')+address);
    			}
    		
    		}
