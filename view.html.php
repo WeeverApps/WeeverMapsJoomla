@@ -31,6 +31,7 @@ defined('_JEXEC') or die;
 	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.ready.js' );
 
 	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.css', 'text/css', null, array());
+	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.joomla.css', 'text/css', null, array());
 	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'jquery.ui.css', 'text/css', null, array());
 
 ?>

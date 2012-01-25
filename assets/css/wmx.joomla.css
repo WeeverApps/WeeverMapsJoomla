@@ -1,0 +1,24 @@
+
+div#wmx-geocoder-launch {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEU1MEQ1QkQzRUM0MTFFMTkyRjREQkJGNDEzMjhFNzUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEU1MEQ1QkUzRUM0MTFFMTkyRjREQkJGNDEzMjhFNzUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4RTUwRDVCQjNFQzQxMUUxOTJGNERCQkY0MTMyOEU3NSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4RTUwRDVCQzNFQzQxMUUxOTJGNERCQkY0MTMyOEU3NSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgN4wJQAAAIsSURBVHjanFXtUYNAEAUm/6UDcSxArMBYQaACoYKYCpJUoKlAUkFIBcEKTAE6YgdYQdx13maeJ5xOdubmuK+3+97tHmFwgl2eJ7F099Km0mJaqqUt3z7avQ4Oh0MQngi+k5Z6tpXipPqXAwAq2BhTE4w7aTMFwj6de6B916/t+z70AI8hQdazrOC3JoVzbgcntTjIRwMRz6ExWwu9tVUGLvsX0l2R9jNpLxZYNKDvPV1aAMAL6S3iLbGcA0zlCVxW0cDlfUuApUYOlQ6bmKRihr+MGcwd8A6RlT3n7ijaW8gyQ6AFOwwxmUj3joVcDtYyp5QT+c6dCwxwiaVlEK2nUEEZLuWSFxFFb3KY7plp7dgzWD1RtCxxzPcXEZjaijYrq6ZPV0RemVQORkMsgwi0Yhy06FOMW08NrhUE8gaomZpY3xiD2PEcDIxdFg0ucoogUyiw50zjQktQNGrnzvi4h4rL0rSgIDOc7U3TU2wL8IKK8oeNqFhiob2gCs1sTJmiuj7zvMydWb3IfCfjH09MhGJRJzG0PL47yKa/7FN1V3C+XKTzUaKaMsGyp6On12cTA0NGZX11sEZfEIsah33/igTZYwE+UMHujw6QcrZpA2nWcOiTqQBYC+0t+llfFpXQPkHJd6iFJ0/0KukK4Bb9kp/siApHAXMAp+QkczMDrDZYnxJ45WZeOBDZpuen3oBdh96VTv/Pjzzh/enjpZxb9Xqsgiy/3i118CXAABqW+6ZUeLQXAAAAAElFTkSuQmCC") no-repeat scroll 0.25em 50% #FFFFFF;
+    border: 1px solid #AAAAAA;
+    border-radius: 0.25em 0.25em 0.25em 0.25em;
+    box-shadow: 4px 0 4px #CCCCCC;
+    color: #1C94C4;
+    cursor: pointer;
+    display: block;
+    font-size: 1.25em;
+    height: 1.5em;
+    margin: 14em 0 0 20em;
+    min-width: 6em;
+    overflow: visible;
+    padding: 0.5em 1em 0.25em 2em;
+    position: absolute;
+    text-align: right;
+    z-index: 100;
+}
+
+div#wmx-geocoder-launch:hover {
+	background-color: #fefefe;
+	color: #FF8C00;
+}
