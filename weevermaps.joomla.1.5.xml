@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="plugin" version="1.5.0" group="content" method="upgrade">
+ <name>Weever Maps Geotagger</name>
+ <creationDate>2012-01-24</creationDate>
+ <author>Robert Gerald Porter</author>
+ <authorEmail>rob@weeverapps.com</authorEmail>
+ <authorUrl>http://www.weeverapps.com/</authorUrl>
+ <copyright>(c) 2012 Weever Apps Inc.</copyright>
+ <license>GPLv3</license>
+ <version>0.2</version>
+ <releaseType>Stable</releaseType>
+ <description>Geotag your Joomla Content articles!</description>
+ <files>
+	<filename plugin="weevermaps">weevermaps.php</filename>
+	<folder>weevermaps</folder>
+ </files>
+	
+ <params group="item-other">
+	<param name="latitude_item" type="text" size="20" default="" label="WEEVERMAPS_LATITUDE" description="WEEVERMAPS_LATITUDE_DESCRIPTION" />
+	<param name="longitude_item" type="text" size="20" default="" label="WEEVERMAPS_LONGITUDE" description="WEEVERMAPS_LONGITUDE_DESCRIPTION" />
+	<param name="altitude_item" type="text" size="20" default="" label="WEEVERMAPS_ALTITUDE" description="WEEVERMAPS_ALTITUDE_DESCRIPTION" />
+	<param name="address_item" type="text" size="20" default="" label="WEEVERMAPS_ADDRESS" description="WEEVERMAPS_ADDRESS_DESCRIPTION" />
+	<param name="label_item" type="text" size="20" default="" label="WEEVERMAPS_LABEL" description="WEEVERMAPS_LABEL_DESCRIPTION" />
+	<param name="marker_item" type="text" size="20" default="" label="WEEVERMAPS_MARKER" description="WEEVERMAPS_MARKER_DESCRIPTION" />
+	<param name="kml_item" type="text" size="20" default="" label="WEEVERMAPS_KML" description="WEEVERMAPS_KML_DESCRIPTION" />
+ </params>
+
+ <languages folder="languages">
+	<language tag="en-GB">en-GB.plg_content_weevermaps.ini</language>
+	<language tag="en-GB">en-GB.plg_content_weevermaps.sys.ini</language>
+ </languages>
+
+ <media destination="plg_weevermaps" folder="assets">
+	<folder>js</folder>
+	<folder>css</folder>
+	<folder>images</folder>
+	<filename>index.html</filename>
+ </media>
+
+</install>
