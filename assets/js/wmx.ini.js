@@ -1,13 +1,14 @@
 var wmx = wmx || {};
 
+wmx.txt = {};
+
 // define localized text strings
-wmx.localText = []
+wmx.localText = {
 
-wmx.localText["WEEVERMAPS_ERROR_NO_RESULTS"] 			=	'WEEVERMAPS_ERROR_NO_RESULTS';
-wmx.localText["WEEVERMAPS_CONFIRM_CLOSE"] 				=	'WEEVERMAPS_CONFIRM_CLOSE';
-
-// set the localization object
-wmx._txt = function(text) {	Joomla.JText._( wmx.localText[text] ); }
+	"WEEVERMAPS_ERROR_NO_RESULTS": 	'WEEVERMAPS_ERROR_NO_RESULTS',
+	"WEEVERMAPS_CONFIRM_CLOSE": 	'WEEVERMAPS_CONFIRM_CLOSE'
+	
+};
 
 // input fields for form
 wmx.inputField = {
@@ -20,3 +21,13 @@ wmx.inputField = {
 	kml: '#pluginsweevermapsk2kml_item'
 
 }
+
+// definitions set at document ready
+
+jQuery(document).ready(function(){ 
+
+	// our localized text object loader
+	wmx._textLoader = Joomla.JText;
+
+});
+

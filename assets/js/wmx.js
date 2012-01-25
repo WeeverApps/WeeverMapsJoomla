@@ -180,7 +180,7 @@ wmx.getGeocode = function(address, callback) {
    				
    			if(status == "ZERO_RESULTS")
    			{
-   				alert(wmx._txt('WEEVERMAPS_ERROR_NO_RESULTS')+address);
+   				alert(wmx.txt._('WEEVERMAPS_ERROR_NO_RESULTS')+address);
    			}
    		
    		}

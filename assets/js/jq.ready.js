@@ -21,6 +21,14 @@
 
 
 jQuery(document).ready(function(){ 
+	
+	wmx.txt = {
+	
+		_: function(text) {
+			return wmx._textLoader._(wmx.localText[text]);
+		}
+	
+	}
  			
 	jQuery('#wmx-address-geocode').click(function(event){
 	
@@ -303,7 +311,7 @@ jQuery(document).ready(function(){
 			beforeClose: function() {
 			
 				if(wmx.safeClose == undefined || wmx.safeClose == false)
-					return confirm(wmx._txt('WEEVERMAPS_CONFIRM_CLOSE'));
+					return confirm(wmx.txt._('WEEVERMAPS_CONFIRM_CLOSE'));
 			
 			}
 		}); 
