@@ -18,36 +18,14 @@
 *
 */
 
-var wmx = wmx || {};
 
-wmx.txt = {};
+jQuery(document).ready(function() {
 
-// define localized text strings
-wmx.localText = {
-
-	"WEEVERMAPS_ERROR_NO_RESULTS": 	'WEEVERMAPS_ERROR_NO_RESULTS',
-	"WEEVERMAPS_CONFIRM_CLOSE": 	'WEEVERMAPS_CONFIRM_CLOSE'
-	
-};
-
-// input fields for form
-wmx.inputField = {
-
-	latitude: 		'#wmx-latitude-val',
-	longitude: 		'#wmx-longitude-val',
-	address: 		'#wmx-address-val',
-	label: 			'#wmx-label-val',
-	marker: 		'#wmx-marker-val',
-	kml: 			'#wmx-kml-val'
-
-}
-
-// definitions set at document ready
-
-jQuery(document).ready(function(){ 
-
-	// our localized text object loader
-	wmx._textLoader = Joomla.JText;
+	jQuery("#wmx-latitude-val").insertBefore("#jform_featured");
+	jQuery("#wmx-longitude-val").insertBefore("#jform_featured");
+	jQuery("#wmx-address-val").insertBefore("#jform_featured");
+	jQuery("#wmx-label-val").insertBefore("#jform_featured");
+	jQuery("#wmx-marker-val").insertBefore("#jform_featured");
+	jQuery("#wmx-kml-val").insertBefore("#jform_featured");
 
 });
-

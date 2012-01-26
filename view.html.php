@@ -21,28 +21,31 @@
 defined('_JEXEC') or die;
 
 $document = &JFactory::getDocument();
+
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery.js' );
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery-ui.js' );
 $document->addScript( 'http://maps.googleapis.com/maps/api/js?sensor=false' );
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'markerwithlabel.js' );
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.ini.js' );
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.js' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.joomla.js' );
 $document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.ready.js' );
 
 $document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.css', 'text/css', null, array());
 $document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.joomla.css', 'text/css', null, array());
 $document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'jquery.ui.css', 'text/css', null, array());
 
-// First, Joomla-specific hidden HTML
+// First, Joomla-specific hidden HTML..
+// Loads values into hidden inputs, will be picked up by jQuery and dumped into other hidden tags within the form element.
 
 ?>
 
-<input type='hidden' id='wmx-latitude-val' value='<?php echo $this->inputString['latitude']; ?>' />
-<input type='hidden' id='wmx-longitude-val' value='<?php echo $this->inputString['longitude']; ?>' />
-<input type='hidden' id='wmx-address-val' value='<?php echo $this->inputString['address']; ?>' />
-<input type='hidden' id='wmx-label-val' value='<?php echo $this->inputString['label']; ?>' />
-<input type='hidden' id='wmx-marker-val' value='<?php echo $this->inputString['marker']; ?>' />
-<input type='hidden' id='wmx-kml-val' value='<?php echo $this->inputString['kml']; ?>' />
+<input type='hidden' id='wmx-latitude-val' name='wmx_latitude_val' value='<?php echo $this->inputString['latitude']; ?>' />
+<input type='hidden' id='wmx-longitude-val' name='wmx_longitude_val' value='<?php echo $this->inputString['longitude']; ?>' />
+<input type='hidden' id='wmx-address-val' name='wmx_address_val' value='<?php echo $this->inputString['address']; ?>' />
+<input type='hidden' id='wmx-label-val' name='wmx_label_val' value='<?php echo $this->inputString['label']; ?>' />
+<input type='hidden' id='wmx-marker-val' name='wmx_marker_val' value='<?php echo $this->inputString['marker']; ?>' />
+<input type='hidden' id='wmx-kml-val' name='wmx_kml_val' value='<?php echo $this->inputString['kml']; ?>' />
 
 <?php 
 

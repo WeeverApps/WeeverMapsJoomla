@@ -51,7 +51,7 @@ class plgContentWeeverMaps extends JPlugin {
 		$version = new JVersion;
 		$this->joomlaVersion = substr($version->getShortVersion(), 0, 3);
 		
-		if( JRequest::getVar("view") != "article" || JRequest::getVar("layout") != "edit" )
+		if( JRequest::getVar("view") != "article" && JRequest::getVar("layout") != "edit" )
 			return false;
 		
 		// Javascript localization assignment. All localized Javascript strings must register here.
@@ -84,7 +84,7 @@ class plgContentWeeverMaps extends JPlugin {
 		
 		include JPATH_PLUGINS.DS.'content'.DS.'weevermaps'.DS.'view.html.php';
 		
-		parent::__construct($subject, $params);
+		parent::__construct($subject, $config);
 		
 	}
 	
@@ -96,7 +96,7 @@ class plgContentWeeverMaps extends JPlugin {
 		{
 		
 			$point = array();
-			$_ds = $_ds;
+			$_ds = ";";
 			
 			$this->convertToLatLong($v);
 			
@@ -112,7 +112,8 @@ class plgContentWeeverMaps extends JPlugin {
 	}
 	
 	
-	private function convertToLatLong(&$obj) {
+	private function convertToLatLong(&$obj) 
+	{
 	
 		$point = rtrim( ltrim( $obj->location, "(POINT" ), ")" );
 		$point = explode(" ", $point);
@@ -127,7 +128,7 @@ class plgContentWeeverMaps extends JPlugin {
 	
 		$db = &JFactory::getDBO();
 		
-		$query = "SELECT component_id, AsText(location) AS location, address, label, kml, marker".
+		$query = "SELECT component_id, AsText(location) AS location, address, label, kml, marker ".
 				"FROM
 					#__weever_maps ".
 				"WHERE
@@ -140,52 +141,25 @@ class plgContentWeeverMaps extends JPlugin {
 	
 	}
 
+	// on AfterContentSave for 1.5
 	
-	public function onAfterContentSave(&$article, $isNew) 
+	
+	public function onContentAfterSave($context, &$data, $isNew) 
 	{
 	
-		$_ds = ";";
-
-		if($this->joomlaVersion == '1.5')
-		{
+		$_ds = ";";			
 		
-			// K2 for Joomla 1.5 stores $item->plugin as INI string rather than JSON
-			// ... and Joomla 1.5 has its own INI parsing class, JRegistry.
-		
-			$registry	= new JRegistry();
-			$registry->loadINI($item->plugins);
-			$geoData	= $registry->toObject( );
-			
-		}
-		else 
-		{
-		
-			// K2 for Joomla 1.6+ is normal.
-		
-			$geoData = json_decode($item->plugins);
-			
-		}
-		
-		if($geoData->weevermapsk2altitude_item == "wxdebug") 
-		{
-		
-			print_r($item->plugins);
-			print_r($geoData);
-
-		}
-			
-		
-		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wx-latitude-val"), 	$_ds) 	);
-		$geoLongArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-longitude-val"), 	$_ds) 	);
-		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-address-val"), 	$_ds) 	);
-		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-label-val"), 		$_ds) 	);
-		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-marker-val"), 	$_ds) 	);
+		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wmx_latitude_val"), 	$_ds) 	);
+		$geoLongArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_longitude_val"), 	$_ds) 	);
+		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_address_val"), 	$_ds) 	);
+		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_label_val"), 		$_ds) 	);
+		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_marker_val"), 	$_ds) 	);
 		
 		$db = &JFactory::getDBO();
 		
 		$query = " 	DELETE FROM #__weever_maps 
 					WHERE
-						component_id = ".$db->quote($item->id)."
+						component_id = ".$db->quote($data->id)."
 						AND
 						component = ".$db->quote($this->_com);
 						
@@ -199,7 +173,7 @@ class plgContentWeeverMaps extends JPlugin {
 			$query = " 	INSERT  ".
 					"	INTO	#__weever_maps ".
 					"	(component_id, component, location, address, label, marker) ".
-					"	VALUES ('".$item->id."', ".$db->quote($this->_com).", 
+					"	VALUES ('".$data->id."', ".$db->quote($this->_com).", 
 							GeomFromText(' POINT(".$geoLatArray[$k]." ".$geoLongArray[$k].") '),
 							".$db->quote($geoAddressArray[$k]).", 
 							".$db->quote($geoLabelArray[$k]).", 
@@ -217,7 +191,7 @@ class plgContentWeeverMaps extends JPlugin {
 			$query = " 	INSERT  ".
 					"	INTO	#__weever_maps ".
 					"	(component_id, component, kml) ".
-					"	VALUES ('".$item->id."', ".$db->quote($this->_com).", ".$db->quote($geoData->weevermapsk2kml_item).")";
+					"	VALUES ('".$data->id."', ".$db->quote($this->_com).", ".$db->quote($geoData->weevermapsk2kml_item).")";
 			
 			$db->setQuery($query);
 			$db->query();

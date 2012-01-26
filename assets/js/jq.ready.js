@@ -272,7 +272,7 @@ jQuery(document).ready(function(){
 			{
 				
 				wmx.map = new google.maps.Map(document.getElementById("wmx-map"), myOptions);
-				//wmx.getSettings();
+				wmx.getSettings();
 				
 			}
 				
