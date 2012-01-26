@@ -1,6 +1,6 @@
 <?php
 /*	
-*	Weever Maps Geotagger, for Joomla
+*	Weever Geotagger, for Joomla
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
@@ -25,12 +25,16 @@ jimport('joomla.plugin.plugin');
 
 class plgContentWeeverMaps extends JPlugin {
 
-	public 	$pluginName = 'weevermaps';
-	public 	$pluginNameHumanReadable;
-	public  $pluginVersion = "0.2";
-	public	$pluginLongVersion = "Version 0.1.1 \"Amundsen\" (beta)";
-	public  $pluginReleaseDate = "January 24, 2012";
-	public  $joomlaVersion;
+	public 		$pluginName 				= "weevermaps";
+	public 		$pluginNameHumanReadable;
+	public  	$pluginVersion 				= "0.2";
+	public		$pluginLongVersion 			= "Version 0.1.1 \"Amundsen\" (beta)";
+	public  	$pluginReleaseDate 			= "January 24, 2012";
+	public  	$joomlaVersion;
+	
+	private		$geoData;
+	private		$inputString				= array();
+	private		$_com						= "com_content";
 
 	public function __construct(&$subject, $config) 
 	{
@@ -72,17 +76,76 @@ class plgContentWeeverMaps extends JPlugin {
 			
 		}
 		
+		if( $id = JRequest::getVar("id") )
+		{
+			$this->getGeoData($id);
+			$this->implodeGeoData();
+		}
+		
 		include JPATH_PLUGINS.DS.'content'.DS.'weevermaps'.DS.'view.html.php';
 		
 		parent::__construct($subject, $params);
 		
 	}
+	
+	
+	private function implodeGeoData() 
+	{
+	
+		foreach( (array) $this->geoData as $k=>$v )
+		{
+		
+			$point = array();
+			$_ds = $_ds;
+			
+			$this->convertToLatLong($v);
+			
+			$this->inputString['longitude'] 	.= $v->longitude 	. $_ds;
+			$this->inputString['latitude'] 		.= $v->latitude 	. $_ds;
+			$this->inputString['address'] 		.= $v->address 		. $_ds;
+			$this->inputString['label'] 		.= $v->label 		. $_ds;
+			$this->inputString['marker'] 		.= $v->marker 		. $_ds;
+			$this->inputString['kml'] 			.= $v->kml 			. $_ds;
+		
+		}
+	
+	}
+	
+	
+	private function convertToLatLong(&$obj) {
+	
+		$point = rtrim( ltrim( $obj->location, "(POINT" ), ")" );
+		$point = explode(" ", $point);
+		$obj->latitude = $point[0];
+		$obj->longitude = $point[1];
+	
+	}
+	
+	
+	private function getGeoData($id)
+	{
+	
+		$db = &JFactory::getDBO();
+		
+		$query = "SELECT component_id, AsText(location) AS location, address, label, kml, marker".
+				"FROM
+					#__weever_maps ".
+				"WHERE
+					component = ".$db->quote($this->_com)." 
+					AND
+					component_id = ".$db->quote($id);
+					
+		$db->setQuery($query);
+		$this->geoData = $db->loadObjectList();
+	
+	}
 
 	
-	public function onAfterContentSave(&$article, $isNew) {
+	public function onAfterContentSave(&$article, $isNew) 
+	{
 	
-		echo "Helloooo, world...";
-		/*
+		$_ds = ";";
+
 		if($this->joomlaVersion == '1.5')
 		{
 		
@@ -112,27 +175,23 @@ class plgContentWeeverMaps extends JPlugin {
 		}
 			
 		
-		$geoLatArray = 		explode( 	";", rtrim( $geoData->weevermapsk2latitude_item, 	";") 	);
-		$geoLongArray = 	explode( 	";", rtrim( $geoData->weevermapsk2longitude_item, 	";") 	);
-		$geoAddressArray = 	explode( 	";", rtrim( $geoData->weevermapsk2address_item, 	";") 	);
-		$geoLabelArray = 	explode( 	";", rtrim( $geoData->weevermapsk2label_item, 		";") 	);
-		$geoMarkerArray = 	explode( 	";", rtrim( $geoData->weevermapsk2marker_item, 		";") 	);
+		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wx-latitude-val"), 	$_ds) 	);
+		$geoLongArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-longitude-val"), 	$_ds) 	);
+		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-address-val"), 	$_ds) 	);
+		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-label-val"), 		$_ds) 	);
+		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wx-marker-val"), 	$_ds) 	);
 		
 		$db = &JFactory::getDBO();
 		
 		$query = " 	DELETE FROM #__weever_maps 
 					WHERE
-						component_id = ".$db->Quote($item->id)."
+						component_id = ".$db->quote($item->id)."
 						AND
-						component = ".$db->Quote('com_k2');
+						component = ".$db->quote($this->_com);
 						
 	
 		$db->setQuery($query);
 		$db->query();
-		
-		
-		if($geoData->weevermapsk2altitude_item == "wxdebug") 
-			echo $query;
 		
 		foreach( (array) $geoLatArray as $k=>$v )
 		{
@@ -140,55 +199,33 @@ class plgContentWeeverMaps extends JPlugin {
 			$query = " 	INSERT  ".
 					"	INTO	#__weever_maps ".
 					"	(component_id, component, location, address, label, marker) ".
-					"	VALUES ('".$item->id."', ".$db->Quote('com_k2').", 
+					"	VALUES ('".$item->id."', ".$db->quote($this->_com).", 
 							GeomFromText(' POINT(".$geoLatArray[$k]." ".$geoLongArray[$k].") '),
-							".$db->Quote($geoAddressArray[$k]).", 
-							".$db->Quote($geoLabelArray[$k]).", 
-							".$db->Quote($geoMarkerArray[$k]).")";
+							".$db->quote($geoAddressArray[$k]).", 
+							".$db->quote($geoLabelArray[$k]).", 
+							".$db->quote($geoMarkerArray[$k]).")";
 						
 		
 			$db->setQuery($query);
 			$db->query();
-			
-			
-			if($geoData->weevermapsk2altitude_item == "wxdebug") 
-				echo $query;
 		
 		}
 		
-		if($geoData->weevermapsk2kml_item)
+		if($geoData->weevermapsk2kml_item = rtrim( JRequest::getVar("wx-kml-val"), $_ds) )
 		{
 			
 			$query = " 	INSERT  ".
 					"	INTO	#__weever_maps ".
 					"	(component_id, component, kml) ".
-					"	VALUES ('".$item->id."', 'com_k2', ".$db->Quote($geoData->weevermapsk2kml_item).")";
+					"	VALUES ('".$item->id."', ".$db->quote($this->_com).", ".$db->quote($geoData->weevermapsk2kml_item).")";
 			
 			$db->setQuery($query);
 			$db->query();
 			
-			
-			if($geoData->weevermapsk2altitude_item == "wxdebug") 
-				echo $query;
 
 		}
 		
 		
-		if($geoData->weevermapsk2altitude_item == "wxdebug") 
-			jexit();
-		*/
-		/*
-		
-		// search code for distance...
-		
-		SELECT *,  glength( linestringfromwkb( linestring( GeomFromText('POINT(45.123 54.262)'), location ) ) ) as 'distance'
-		FROM
-		jos_weever_maps
-		ORDER BY
-		distance
-		
-		*/
-	
 	}
 
 	

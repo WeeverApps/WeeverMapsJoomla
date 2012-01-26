@@ -1,6 +1,6 @@
 <?php
 /*	
-*	Weever Maps Geotagger, for Joomla
+*	Weever Geotagger, for Joomla
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
@@ -20,23 +20,35 @@
 */
 defined('_JEXEC') or die;
 
+$document = &JFactory::getDocument();
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery.js' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery-ui.js' );
+$document->addScript( 'http://maps.googleapis.com/maps/api/js?sensor=false' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'markerwithlabel.js' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.ini.js' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.js' );
+$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.ready.js' );
 
-	$document = &JFactory::getDocument();
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery.js' );
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jquery-ui.js' );
-	$document->addScript( 'http://maps.googleapis.com/maps/api/js?sensor=false' );
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'markerwithlabel.js' );
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.ini.js' );
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'wmx.js' );
-	$document->addScript( '/media'.DS.'plg_weevermaps'.DS.'js'.DS.'jq.ready.js' );
+$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.css', 'text/css', null, array());
+$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.joomla.css', 'text/css', null, array());
+$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'jquery.ui.css', 'text/css', null, array());
 
-	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.css', 'text/css', null, array());
-	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'wmx.joomla.css', 'text/css', null, array());
-	$document->addStyleSheet(DS.'media'.DS.'plg_weevermaps'.DS.'css'.DS.'jquery.ui.css', 'text/css', null, array());
+// First, Joomla-specific hidden HTML
 
 ?>
 
-<input type='hidden' id='wmx-legacy' value='<?php echo $legacyMode; ?>'>
+<input type='hidden' id='wmx-latitude-val' value='<?php echo $this->inputString['latitude']; ?>' />
+<input type='hidden' id='wmx-longitude-val' value='<?php echo $this->inputString['longitude']; ?>' />
+<input type='hidden' id='wmx-address-val' value='<?php echo $this->inputString['address']; ?>' />
+<input type='hidden' id='wmx-label-val' value='<?php echo $this->inputString['label']; ?>' />
+<input type='hidden' id='wmx-marker-val' value='<?php echo $this->inputString['marker']; ?>' />
+<input type='hidden' id='wmx-kml-val' value='<?php echo $this->inputString['kml']; ?>' />
+
+<?php 
+
+// Followed by standard core HTML
+
+?>
 
 <div id='wmx-dialog' class='wmx-ui' title='&lt;img id=&quot;wmx-logo&quot; src=&quot;/media/plg_weevermaps/images/weever.png&quot;&gt; <?php echo $this->pluginNameHumanReadable; ?> v<?php echo $this->pluginVersion; ?>'>
 		<div id='wmx-address' class='wmx-ui'>

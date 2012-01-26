@@ -33,12 +33,12 @@ wmx.localText = {
 // input fields for form
 wmx.inputField = {
 
-	latitude: '#pluginsweevermapsk2latitude_item',
-	longitude: '#pluginsweevermapsk2longitude_item',
-	address: '#pluginsweevermapsk2address_item',
-	label: '#pluginsweevermapsk2label_item',
-	marker: '#pluginsweevermapsk2marker_item',
-	kml: '#pluginsweevermapsk2kml_item'
+	latitude: 		'#wmx-latitude-val',
+	longitude: 		'#wmx-longitude-val',
+	address: 		'#wmx-address-val',
+	label: 			'#wmx-label-val',
+	marker: 		'#wmx-marker-val',
+	kml: 			'#wmx-kml-val'
 
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="plugin" version="1.5.0" group="content" method="upgrade">
- <name>Weever Maps Geotagger</name>
+ <name>Weever Geotagger</name>
  <creationDate>2012-01-24</creationDate>
  <author>Robert Gerald Porter</author>
  <authorEmail>rob@weeverapps.com</authorEmail>
