@@ -149,11 +149,11 @@ class plgContentWeeverMaps extends JPlugin {
 	
 		$_ds = ";";			
 		
-		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wmx_latitude_val"), 	$_ds) 	);
+		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wmx_latitude_val"), 		$_ds) 	);
 		$geoLongArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_longitude_val"), 	$_ds) 	);
-		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_address_val"), 	$_ds) 	);
+		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_address_val"), 		$_ds) 	);
 		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_label_val"), 		$_ds) 	);
-		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_marker_val"), 	$_ds) 	);
+		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_marker_val"), 		$_ds) 	);
 		
 		$db = &JFactory::getDBO();
 		
