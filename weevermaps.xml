@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="1.6" group="content">
+<extension type="plugin" version="1.7" group="content">
 
  <name>WEEVERMAPS_PLG_NAME</name>
- <creationDate>2012-01-24</creationDate>
+ <creationDate>2012-02-07</creationDate>
  <author>Robert Gerald Porter</author>
  <authorEmail>rob@weeverapps.com</authorEmail>
  <authorUrl>http://www.weeverapps.com/</authorUrl>

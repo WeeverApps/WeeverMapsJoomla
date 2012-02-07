@@ -295,6 +295,9 @@ wmx.getSettings = function() {
 	
 	for( i=0; i<latArray.length; i++ ) {
 	
+		if(!latArray[i] && !longArray[i])
+			continue;
+	
 		wmx.addMarker( new google.maps.LatLng( latArray[i], longArray[i]), addArray[i], labelArray[i], wmx.newMarkerImage(markArray[i]) );
 	
 	}

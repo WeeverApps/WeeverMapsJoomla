@@ -28,8 +28,8 @@ class plgContentWeeverMaps extends JPlugin {
 	public 		$pluginName 				= "weevermaps";
 	public 		$pluginNameHumanReadable;
 	public  	$pluginVersion 				= "0.2";
-	public		$pluginLongVersion 			= "Version 0.1.1 \"Amundsen\" (beta)";
-	public  	$pluginReleaseDate 			= "January 24, 2012";
+	public		$pluginLongVersion 			= "Version 0.2 \"Amundsen\" (beta)";
+	public  	$pluginReleaseDate 			= "February 7, 2012";
 	public  	$joomlaVersion;
 	
 	private		$geoData;
@@ -51,7 +51,7 @@ class plgContentWeeverMaps extends JPlugin {
 		$version = new JVersion;
 		$this->joomlaVersion = substr($version->getShortVersion(), 0, 3);
 		
-		if( JRequest::getVar("view") != "article" && JRequest::getVar("layout") != "edit" )
+		if( JRequest::getVar("view") == "category" )
 			return false;
 		
 		// Javascript localization assignment. All localized Javascript strings must register here.
