@@ -4,7 +4,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2
+*	Version: 	0.2.1
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -27,9 +27,9 @@ class plgContentWeeverMaps extends JPlugin {
 
 	public 		$pluginName 				= "weevermaps";
 	public 		$pluginNameHumanReadable;
-	public  	$pluginVersion 				= "0.2";
-	public		$pluginLongVersion 			= "Version 0.2 \"Amundsen\" (beta)";
-	public  	$pluginReleaseDate 			= "February 7, 2012";
+	public  	$pluginVersion 				= "0.2.1";
+	public		$pluginLongVersion 			= "Version 0.2.1 \"Battuta\" (beta)";
+	public  	$pluginReleaseDate 			= "February 28, 2012";
 	public  	$joomlaVersion;
 	
 	private		$geoData;
@@ -39,9 +39,10 @@ class plgContentWeeverMaps extends JPlugin {
 	public function __construct(&$subject, $config) 
 	{
 		
-		$app =& JFactory::getApplication();
+		$app 		= &JFactory::getApplication();
+		$option 	= JRequest::getCmd('option');
 		
-		if( !$app->isAdmin() )
+		if( !$app->isAdmin() || $option != "com_content" )
 			return false;
 		
 		JPlugin::loadLanguage('plg_content_'.$this->pluginName, JPATH_ADMINISTRATOR);
