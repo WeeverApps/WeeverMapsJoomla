@@ -4,7 +4,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2.1
+*	Version: 	0.2.5
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -27,13 +27,20 @@ class plgContentWeeverMaps extends JPlugin {
 
 	public 		$pluginName 				= "weevermaps";
 	public 		$pluginNameHumanReadable;
-	public  	$pluginVersion 				= "0.2.1";
-	public		$pluginLongVersion 			= "Version 0.2.1 \"Battuta\" (beta)";
-	public  	$pluginReleaseDate 			= "February 28, 2012";
+	public  	$pluginVersion 				= "0.2.5";
+	public		$pluginLongVersion 			= "Version 0.2.5 \"Cabot\" (beta)";
+	public  	$pluginReleaseDate 			= "June 29, 2012";
 	public  	$joomlaVersion;
 	
 	private		$geoData;
-	private		$inputString				= array();
+	private		$inputString				= array(
+													'longitude' => 0,
+													'latitude' 	=> 0,
+													'address'	=> null,
+													'label'		=> null,
+													'marker'	=> null,
+													'kml'		=> null
+												);
 	private		$_com						= "com_content";
 
 	public function __construct(&$subject, $config) 

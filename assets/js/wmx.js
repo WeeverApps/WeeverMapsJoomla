@@ -3,7 +3,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2
+*	Version: 	0.2.5
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -197,10 +197,12 @@ wmx.mapCenter = function() {
 		wmx.pin.setMap(null);
 	
 	wmx.pin = new google.maps.Marker({
-	    position: wmx.position, 
-	    map: wmx.map,
-	    icon: wmx.mapImages.pin,
-	    draggable:false
+	
+	    position: 		wmx.position, 
+	    map: 			wmx.map,
+	    icon: 			wmx.mapImages.pin,
+	    draggable:		false
+	    
 	});
 
 }
@@ -272,15 +274,17 @@ wmx.newMarkerImage = function(spriteUrl) {
 
 }
 
+wmx.latLongBounds 	= new google.maps.LatLngBounds();
+
 wmx.getSettings = function() {
 
-	var latitude 	= wmx.inputField.latitude,
-		longitude 	= wmx.inputField.longitude,
-		address	 	= wmx.inputField.address,
-		label 		= wmx.inputField.label,
-		markerId 	= wmx.inputField.marker,
-		kml 		= wmx.inputField.kml,
-		_dl 		= ";";
+	var latitude 		= wmx.inputField.latitude,
+		longitude 		= wmx.inputField.longitude,
+		address	 		= wmx.inputField.address,
+		label 			= wmx.inputField.label,
+		markerId 		= wmx.inputField.marker,
+		kml 			= wmx.inputField.kml,
+		_dl 			= ";";
 		
 	jQuery('#wmx-kml-url').val( jQuery( kml ).val() );
 	
@@ -292,15 +296,19 @@ wmx.getSettings = function() {
 		addArray 	= jQuery( address ).val().split( _dl ),
 		labelArray 	= jQuery( label ).val().split( _dl ),
 		markArray 	= jQuery( markerId ).val().split( _dl );
-	
+
 	for( i=0; i<latArray.length; i++ ) {
 	
 		if(!latArray[i] && !longArray[i])
 			continue;
 	
 		wmx.addMarker( new google.maps.LatLng( latArray[i], longArray[i]), addArray[i], labelArray[i], wmx.newMarkerImage(markArray[i]) );
+		
+		wmx.latLongBounds.extend( new google.maps.LatLng( latArray[i], longArray[i]) );
 	
 	}
+	
+	wmx.map.fitBounds(wmx.latLongBounds);
 
 }
 

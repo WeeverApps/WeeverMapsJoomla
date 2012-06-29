@@ -252,6 +252,8 @@ jQuery(document).ready(function(){
 	
 		e.preventDefault();
 		
+		wmx.launchMessage();
+		
 		var loadDialog = function() {
 					
 			var	myOptions = {
