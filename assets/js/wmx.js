@@ -308,7 +308,7 @@ wmx.getSettings = function() {
 	
 	}
 	
-	wmx.map.fitBounds(wmx.latLongBounds);
+	//wmx.map.fitBounds(wmx.latLongBounds);
 
 }
 

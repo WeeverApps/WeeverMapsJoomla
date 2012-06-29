@@ -252,13 +252,13 @@ jQuery(document).ready(function(){
 	
 		e.preventDefault();
 		
-		wmx.launchMessage();
+		//wmx.launchMessage();
 		
 		var loadDialog = function() {
 					
 			var	myOptions = {
 			          center: new google.maps.LatLng(43.243603, -79.889074),
-			          zoom: 8,
+			          zoom: 5,
 			          mapTypeId: google.maps.MapTypeId.ROADMAP
 			        };
 			        
@@ -268,7 +268,7 @@ jQuery(document).ready(function(){
 				setTimeout(function() {
 				
 					google.maps.event.trigger(wmx.map, 'resize');
-					wmx.map.fitBounds(wmx.latLongBounds);
+					//wmx.map.fitBounds(wmx.latLongBounds);
 					
 				}, 350);
 				
