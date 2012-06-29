@@ -55,7 +55,7 @@ var _jInsertFieldValue = function(value, id) {
 	
 	var image = "/"+value;
 	
-	if(id == 'wmx-marker-url') {
+	if(fieldid == 'wmx-marker-url') {
 		
 		wmx.mapImages.icon = new google.maps.MarkerImage(
 		                image,
@@ -68,7 +68,7 @@ var _jInsertFieldValue = function(value, id) {
 		jQuery('#wmx-marker-image').attr('src', image);
 	
 	} 
-	else if(id == "wmx-marker-icon") {
+	else if(fieldid == "wmx-marker-icon") {
 	
 		wmx.selectedMarker.setIcon(	
 			new google.maps.MarkerImage(

@@ -3,7 +3,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2
+*	Version: 	0.2.4
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -151,7 +151,7 @@ jQuery(document).ready(function(){
 	});
 
 
-	jQuery("<div id='wmx-geocoder-launch'>GeoTag</div>").insertAfter("#jform_featured");
+	jQuery("<div id='wmx-geocoder-launch'>GeoTag</div>").insertAfter(wmx.launchAnchor);
 
 	jQuery('#wmx-marker-label-input').keyup(function(e) {
 	
@@ -264,7 +264,10 @@ jQuery(document).ready(function(){
 			{
 			
 				setTimeout(function() {
+				
 					google.maps.event.trigger(wmx.map, 'resize');
+					wmx.map.fitBounds(wmx.latLongBounds);
+					
 				}, 350);
 				
 			}
