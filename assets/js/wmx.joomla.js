@@ -17,11 +17,13 @@
 *   GNU General Public License for more details <http://www.gnu.org/licenses/>.
 *
 */
+var fieldid;
 
 jQuery(document).ready(function(){ 
 
 	jQuery('#wmx-select-marker').click(function(event) {
 	
+		fieldid = 'wmx-marker-url';	
 		event.preventDefault();
 		SqueezeBox.initialize();
 		SqueezeBox.fromElement(this, {
@@ -35,6 +37,7 @@ jQuery(document).ready(function(){
 
 	jQuery('#wmx-marker-change-icon').click(function(event) {
 	
+		fieldid = 'wmx-marker-icon';
 		event.preventDefault();
 		SqueezeBox.initialize();
 		SqueezeBox.fromElement(this, {
