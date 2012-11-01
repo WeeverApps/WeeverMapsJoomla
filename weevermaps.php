@@ -178,22 +178,26 @@ class plgContentWeeverMaps extends JPlugin {
 		foreach( (array) $geoLatArray as $k=>$v )
 		{
 		
-			$query = " 	INSERT  ".
-					"	INTO	#__weever_maps ".
-					"	(component_id, component, location, address, label, marker) ".
-					"	VALUES ('".$data->id."', ".$db->quote($this->_com).", 
-							GeomFromText(' POINT(".$geoLatArray[$k]." ".$geoLongArray[$k].") '),
-							".$db->quote($geoAddressArray[$k]).", 
-							".$db->quote($geoLabelArray[$k]).", 
-							".$db->quote($geoMarkerArray[$k]).")";
-						
-		
-			$db->setQuery($query);
-			$db->query();
+			if( !empty($v)) {
+			
+				$query = " 	INSERT  ".
+						"	INTO	#__weever_maps ".
+						"	(component_id, component, location, address, label, marker) ".
+						"	VALUES ('".$data->id."', ".$db->quote($this->_com).", 
+								GeomFromText(' POINT(".$geoLatArray[$k]." ".$geoLongArray[$k].") '),
+								".$db->quote($geoAddressArray[$k]).", 
+								".$db->quote($geoLabelArray[$k]).", 
+								".$db->quote($geoMarkerArray[$k]).")";
+							
+			
+				$db->setQuery($query);
+				$db->query();
+			
+			}
 		
 		}
 		
-		if($geoData->weevermapsk2kml_item = rtrim( JRequest::getVar("wx-kml-val"), $_ds) )
+		if($geoData->weevermapsk2kml_item = rtrim( JRequest::getVar("wmx_kml_val"), $_ds) )
 		{
 			
 			$query = " 	INSERT  ".
