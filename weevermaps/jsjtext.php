@@ -69,7 +69,7 @@ class jsJText extends JText
 	{
 	
 		
-		$document = &JFactory::getDocument();
+		$document = JFactory::getDocument();
 		
 		$document->addCustomTag (
 			'<script type="text/javascript">var strings = '.

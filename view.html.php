@@ -4,7 +4,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2
+*	Version: 	0.3
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 */
 defined('_JEXEC') or die;
 
-$document = &JFactory::getDocument();
+$document = JFactory::getDocument();
 
 $root_url = substr(JURI::root(), 0, strlen(JURI::root())-1);
 

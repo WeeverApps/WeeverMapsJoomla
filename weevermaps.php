@@ -4,7 +4,7 @@
 *	(c) 2012 Weever Apps Inc. <http://www.weeverapps.com/>
 *
 *	Author: 	Robert Gerald Porter <rob@weeverapps.com>
-*	Version: 	0.2.5
+*	Version: 	0.3
 *   License: 	GPL v3.0
 *
 *   This extension is free software: you can redistribute it and/or modify
@@ -21,15 +21,19 @@
 
 defined('_JEXEC') or die;
 
+# Joomla 3.0 nonsense
+if( !defined('DS') )
+	define( 'DS', DIRECTORY_SEPARATOR );
+
 jimport('joomla.plugin.plugin');
 
 class plgContentWeeverMaps extends JPlugin {
 
 	public 		$pluginName 				= "weevermaps";
 	public 		$pluginNameHumanReadable;
-	public  	$pluginVersion 				= "0.2.5";
-	public		$pluginLongVersion 			= "Version 0.2.5 \"Cabot\" (beta)";
-	public  	$pluginReleaseDate 			= "June 29, 2012";
+	public  	$pluginVersion 				= "0.3";
+	public		$pluginLongVersion 			= "Version 0.3 \"Da Gama\" (beta)";
+	public  	$pluginReleaseDate 			= "November 8, 2012";
 	public  	$joomlaVersion;
 	
 	private		$geoData;
@@ -46,7 +50,7 @@ class plgContentWeeverMaps extends JPlugin {
 	public function __construct(&$subject, $config) 
 	{
 		
-		$app 		= &JFactory::getApplication();
+		$app 		= JFactory::getApplication();
 		$option 	= JRequest::getCmd('option');
 		
 		if( !$app->isAdmin() || $option != "com_content" )
@@ -56,8 +60,8 @@ class plgContentWeeverMaps extends JPlugin {
 		
 		$this->pluginNameHumanReadable = JText::_('WEEVERMAPS_PLG_NAME');
 		
-		$version = new JVersion;
-		$this->joomlaVersion = substr($version->getShortVersion(), 0, 3);
+		$version 				= new JVersion;
+		$this->joomlaVersion 	= substr($version->getShortVersion(), 0, 3);
 		
 		if( JRequest::getVar("view") == "category" )
 			return false;
@@ -134,7 +138,7 @@ class plgContentWeeverMaps extends JPlugin {
 	private function getGeoData($id)
 	{
 	
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 		
 		$query = "SELECT component_id, AsText(location) AS location, address, label, kml, marker ".
 				"FROM
@@ -163,7 +167,7 @@ class plgContentWeeverMaps extends JPlugin {
 		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_label_val"), 		$_ds) 	);
 		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_marker_val"), 		$_ds) 	);
 		
-		$db = &JFactory::getDBO();
+		$db = JFactory::getDBO();
 		
 		$query = " 	DELETE FROM #__weever_maps 
 					WHERE
