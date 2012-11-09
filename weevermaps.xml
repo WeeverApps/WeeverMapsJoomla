@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="1.7" group="content">
+<extension type="plugin" version="1.7" group="content" method="upgrade">
 
  <name>WEEVERMAPS_PLG_NAME</name>
  <creationDate>2012-11-08</creationDate>
@@ -11,6 +11,8 @@
  <version>0.3</version>
  <releaseType>Stable</releaseType>
  <description>WEEVERMAPS_PLG_DESCRIPTION</description>
+ 
+ <scriptfile>weevermaps.install.php</scriptfile>
  
  <files>
  
@@ -36,5 +38,11 @@
  	<filename>index.html</filename>
  	
   </media>
+  
+  <updateservers>
+  
+  	<server type="collection">http://weeverapps.com/download_files/weever_appbuilder.xml</server>
+  	
+  </updateservers>
 
 </extension>
