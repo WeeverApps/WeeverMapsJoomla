@@ -180,11 +180,12 @@ jQuery(document).ready(function(){
 	
 		jQuery('#wmx-kml-dialog').dialog({
 		
-			resizable: false,
-			height:140,
-			modal: true,
-			buttons: {
-				"Load KML File": function() {
+			resizable: 		false,
+			height:			140,
+			modal: 			true,
+			buttons: 		{
+			
+				"Load KML File": 	function() {
 					
 					if(wmx.KmlLayer instanceof google.maps.KmlLayer)
 						wmx.KmlLayer.setMap(null);
@@ -195,8 +196,10 @@ jQuery(document).ready(function(){
 					jQuery( this ).dialog( "close" );
 					
 				},
-				Cancel: function() {
+				"Cancel": 			function() {
+
 					jQuery( this ).dialog( "close" );
+					
 				}
 			}
 		
@@ -235,96 +238,26 @@ jQuery(document).ready(function(){
 		e.preventDefault();
 		
 		jQuery("#wmx-about-plugin-dialog").dialog({
-			modal: true, 
-			resizable: false,
-			width: 'auto',
-			height: 'auto',
-			buttons: {
-				Done: function() {
+		
+			modal: 			true, 
+			resizable: 		false,
+			width: 			'auto',
+			height: 		'auto',
+			buttons: 		{
+			
+				"Done": 		function() {
+				
 					jQuery(this).dialog( "close" );
+					
 				}		
+				
 			}
+			
 		}); 
 	
 	});
 	
-	jQuery('#wmx-geocoder-launch').click(function(e) {
-	
-		e.preventDefault();
-		
-		//wmx.launchMessage();
-		
-		var loadDialog = function() {
-					
-			var	myOptions = {
-			          center: new google.maps.LatLng(43.243603, -79.889074),
-			          zoom: 5,
-			          mapTypeId: google.maps.MapTypeId.ROADMAP
-			        };
-			        
-			if(wmx.map instanceof google.maps.Map)
-			{
-			
-				setTimeout(function() {
-				
-					google.maps.event.trigger(wmx.map, 'resize');
-					//wmx.map.fitBounds(wmx.latLongBounds);
-					
-				}, 350);
-				
-			}
-			else 
-			{
-				
-				wmx.map = new google.maps.Map(document.getElementById("wmx-map"), myOptions);
-				wmx.getSettings();
-				
-			}
-				
-			google.maps.event.addListener(wmx.map, 'mousemove', function(event) {
-			
-				document.getElementById('wmx-lat-hover').value = event.latLng.lat();
-				document.getElementById('wmx-long-hover').value = event.latLng.lng();
-			
-			}); 
-			
-			google.maps.event.addListener(wmx.map, 'click', function(event) {
-			
-				wmx.addMarker(event.latLng);
-				
-			}); 
-			
-		}
-		
-	
-		jQuery("#wmx-dialog").dialog({
-			modal: true, 
-			resizable: false,
-			width: 'auto',
-			height: 'auto',
-			buttons: {
-				Cancel: function() {
-					jQuery(this).dialog( "close" );
-				},
-				"Save Changes": function() {
-					wmx.saveSettings();
-					jQuery(this).dialog( "close" );
-					wmx.safeClose = false;
-				},			
-			},
-			open: loadDialog(),
-			beforeClose: function() {
-			
-				if(wmx.safeClose == undefined || wmx.safeClose == false)
-					return confirm(wmx.txt._('WEEVERMAPS_CONFIRM_CLOSE'));
-			
-			}
-		}); 
-	
-	
-	});
-		
-	
+	jQuery( wmx.trigger ).click( wmx.openWindow );
 	
 });
 

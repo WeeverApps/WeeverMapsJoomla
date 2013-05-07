@@ -19,7 +19,7 @@
 *
 */
 
-class plgContentWeeverMapsInstallerScript
+class plgWeeverWeeverMaps2InstallerScript
 { 
 
 	public function install( $parent ) 
@@ -30,8 +30,8 @@ class plgContentWeeverMapsInstallerScript
 		$columnElement   	= $db->nameQuote("element");
 		$columnType      	= $db->nameQuote("type");
 		$columnEnabled   	= $db->nameQuote("enabled");
-		 
-		$db->setQuery("UPDATE $tableExtensions SET $columnEnabled=1 WHERE $columnElement='weevermaps' AND $columnType='plugin'");
+
+		$db->setQuery("UPDATE $tableExtensions SET $columnEnabled=1 WHERE $columnElement='weevermaps2' AND $columnType='plugin'");
 		$db->query();
 		  
 	} 

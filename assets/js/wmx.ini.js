@@ -25,12 +25,16 @@ wmx.txt = {};
 // define localized text strings
 wmx.localText = {
 
-	"WEEVERMAPS_ERROR_NO_RESULTS": 	'WEEVERMAPS_ERROR_NO_RESULTS',
-	"WEEVERMAPS_CONFIRM_CLOSE": 	'WEEVERMAPS_CONFIRM_CLOSE'
+	"WEEVERMAPS2_ERROR_NO_RESULTS": 	'WEEVERMAPS2_ERROR_NO_RESULTS',
+	"WEEVERMAPS2_CONFIRM_CLOSE": 	'WEEVERMAPS2_CONFIRM_CLOSE'
 	
 };
 
-wmx.launchAnchor = "#jform_featured";
+wmx.launchAnchor 	= ".wx-geotag";
+wmx.trigger 		= ".wmx-geocoder-launch";
+wmx.remoteSource	= true;
+wmx.remoteIdPrefix	= "wmx-tab-id-";
+wmx.maxZoom			= 15;
 
 // input fields for form
 wmx.inputField = {
@@ -49,7 +53,8 @@ wmx.inputField = {
 jQuery(document).ready(function(){ 
 
 	// our localized text object loader
-	wmx._textLoader = Joomla.JText;
+	wmx._textLoader 	= Joomla.JText;
+	wmx.remoteKey		= jQuery( "input#wx-site-key" ).val();
 
 });
 
