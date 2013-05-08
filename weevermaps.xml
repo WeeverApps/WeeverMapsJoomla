@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="1.7" group="weever" method="upgrade">
+<extension type="plugin" version="1.7" group="content" method="upgrade">
 
- <name>WEEVERMAPS2_PLG_NAME</name>
- <creationDate>2013-02-22</creationDate>
+ <name>WEEVERMAPS_PLG_NAME</name>
+ <creationDate>2012-11-08</creationDate>
  <author>Robert Gerald Porter</author>
  <authorEmail>rob@weeverapps.com</authorEmail>
  <authorUrl>http://www.weeverapps.com/</authorUrl>
@@ -10,27 +10,27 @@
  <license>GPLv3</license>
  <version>0.3</version>
  <releaseType>Stable</releaseType>
- <description>WEEVERMAPS2_PLG_DESCRIPTION</description>
+ <description>WEEVERMAPS_PLG_DESCRIPTION</description>
  
- <scriptfile>weevermaps2.install.php</scriptfile>
+ <scriptfile>weevermaps.install.php</scriptfile>
  
  <files>
  
-	<filename plugin="weevermaps2">weevermaps2.php</filename>
-	<filename plugin="weevermaps2">view.html.php</filename>
-	<folder>weevermaps2</folder>
+	<filename plugin="weevermaps">weevermaps.php</filename>
+	<filename plugin="weevermaps">view.html.php</filename>
+	<folder>weevermaps</folder>
 	
  </files>
 	
  <languages folder="languages">
  
-	<language tag="en-GB">en-GB.plg_weever_weevermaps2.ini</language>
-	<language tag="en-GB">en-GB.plg_weever_weevermaps2.sys.ini</language>
+	<language tag="en-GB">en-GB.plg_content_weevermaps.ini</language>
+	<language tag="en-GB">en-GB.plg_content_weevermaps.sys.ini</language>
 	
  </languages>
  
  
-  <media destination="plg_weevermaps2" folder="assets">
+  <media destination="plg_weevermaps" folder="assets">
   
  	<folder>js</folder>
  	<folder>css</folder>

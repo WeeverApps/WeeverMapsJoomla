@@ -27,13 +27,13 @@ if( !defined('DS') )
 
 jimport('joomla.plugin.plugin');
 
-class plgWeeverWeeverMaps2 extends JPlugin {
+class plgContentWeeverMaps extends JPlugin {
 
-	public 		$pluginName 				= "weevermaps2";
+	public 		$pluginName 				= "weevermaps";
 	public 		$pluginNameHumanReadable;
 	public  	$pluginVersion 				= "0.3";
 	public		$pluginLongVersion 			= "Version 0.3 \"Da Gama\" (beta)";
-	public  	$pluginReleaseDate 			= "February 22, 2013";
+	public  	$pluginReleaseDate 			= "November 8, 2012";
 	public  	$joomlaVersion;
 	
 	private		$geoData;
@@ -45,42 +45,46 @@ class plgWeeverWeeverMaps2 extends JPlugin {
 													'marker'	=> null,
 													'kml'		=> null
 												);
-	private		$_com						= "com_weever";
+	private		$_com						= "com_content";
 
 	public function __construct(&$subject, $config) 
 	{
 		
 		$app 		= JFactory::getApplication();
 		$option 	= JRequest::getCmd('option');
-
-		JPlugin::loadLanguage('plg_weever_'.$this->pluginName, JPATH_ADMINISTRATOR);
 		
-		$this->pluginNameHumanReadable = JText::_('WEEVERMAPS2_PLG_NAME');
+		if( !$app->isAdmin() || $option != "com_content" )
+			return false;
+		
+		JPlugin::loadLanguage('plg_content_'.$this->pluginName, JPATH_ADMINISTRATOR);
+		
+		$this->pluginNameHumanReadable = JText::_('WEEVERMAPS_PLG_NAME');
 		
 		$version 				= new JVersion;
 		$this->joomlaVersion 	= substr($version->getShortVersion(), 0, 3);
 		
-		if( strstr(JRequest::getVar("task"), "ajax") || strstr(JRequest::getVar("task"), "upload") )
+		if( JRequest::getVar("view") == "category" )
 			return false;
 		
 		// Javascript localization assignment. All localized Javascript strings must register here.
+		
 		if($this->joomlaVersion == '1.5')
 		{
 
 			// Joomla 1.5 does not support Javascript localization. This adds support.
 
-			include_once JPATH_PLUGINS.DS.'weever'.DS.'weevermaps2'.DS.'jsjtext15.php';
+			include_once JPATH_PLUGINS.DS.'content'.DS.'weevermaps'.DS.'jsjtext15.php';
 			
-			jsJText::script('WEEVERMAPS2_CONFIRM_CLOSE');
-			jsJText::script('WEEVERMAPS2_ERROR_NO_RESULTS');
+			jsJText::script('WEEVERMAPS_CONFIRM_CLOSE');
+			jsJText::script('WEEVERMAPS_ERROR_NO_RESULTS');
 			jsJText::load();
 		
 		}
 		else
 		{
 		
-			JText::script('WEEVERMAPS2_CONFIRM_CLOSE');
-			JText::script('WEEVERMAPS2_ERROR_NO_RESULTS');
+			JText::script('WEEVERMAPS_CONFIRM_CLOSE');
+			JText::script('WEEVERMAPS_ERROR_NO_RESULTS');
 			
 		}
 		
@@ -90,7 +94,7 @@ class plgWeeverWeeverMaps2 extends JPlugin {
 			$this->implodeGeoData();
 		}
 		
-		include JPATH_PLUGINS.DS.'weever'.DS.'weevermaps2'.DS.'view.html.php';
+		include JPATH_PLUGINS.DS.'content'.DS.'weevermaps'.DS.'view.html.php';
 		
 		parent::__construct($subject, $config);
 		
@@ -148,6 +152,72 @@ class plgWeeverWeeverMaps2 extends JPlugin {
 		$this->geoData = $db->loadObjectList();
 	
 	}
+
+	// on AfterContentSave for 1.5
+	
+	
+	public function onContentAfterSave($context, &$data, $isNew) 
+	{
+	
+		$_ds = ";";			
+		
+		$geoLatArray = 		explode( 	$_ds, rtrim( JRequest::getVar("wmx_latitude_val"), 		$_ds) 	);
+		$geoLongArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_longitude_val"), 	$_ds) 	);
+		$geoAddressArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_address_val"), 		$_ds) 	);
+		$geoLabelArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_label_val"), 		$_ds) 	);
+		$geoMarkerArray = 	explode( 	$_ds, rtrim( JRequest::getVar("wmx_marker_val"), 		$_ds) 	);
+		
+		$db = JFactory::getDBO();
+		
+		$query = " 	DELETE FROM #__weever_maps 
+					WHERE
+						component_id = ".$db->quote($data->id)."
+						AND
+						component = ".$db->quote($this->_com);
+						
+	
+		$db->setQuery($query);
+		$db->query();
+		
+		foreach( (array) $geoLatArray as $k=>$v )
+		{
+		
+			if( !empty($v)) {
+			
+				$query = " 	INSERT  ".
+						"	INTO	#__weever_maps ".
+						"	(component_id, component, location, address, label, marker) ".
+						"	VALUES ('".$data->id."', ".$db->quote($this->_com).", 
+								GeomFromText(' POINT(".$geoLatArray[$k]." ".$geoLongArray[$k].") '),
+								".$db->quote($geoAddressArray[$k]).", 
+								".$db->quote($geoLabelArray[$k]).", 
+								".$db->quote($geoMarkerArray[$k]).")";
+							
+			
+				$db->setQuery($query);
+				$db->query();
+			
+			}
+		
+		}
+		
+		if($geoData->weevermapsk2kml_item = rtrim( JRequest::getVar("wmx_kml_val"), $_ds) )
+		{
+			
+			$query = " 	INSERT  ".
+					"	INTO	#__weever_maps ".
+					"	(component_id, component, kml) ".
+					"	VALUES ('".$data->id."', ".$db->quote($this->_com).", ".$db->quote($geoData->weevermapsk2kml_item).")";
+			
+			$db->setQuery($query);
+			$db->query();
+			
+
+		}
+		
+		
+	}
+
 	
 } 
 

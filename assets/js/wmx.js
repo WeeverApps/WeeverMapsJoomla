@@ -51,28 +51,24 @@ wmx.addMarker = function(position, address, labelContent, icon) {
 		hash 	= Math.floor((position.lat() + position.lng()) * 10000);
 
 	var marker = new MarkerWithLabel({
-	
-	       position: 		position,
-	       draggable: 		true,
-	       map: 			wmx.map,
-	       icon: 			icon,
-	       address: 		address,
-	       labelId: '		wmx-label-'+hash
-	       
+	       position: position,
+	       draggable: true,
+	       map: wmx.map,
+	       icon: icon,
+	       address: address,
+	       labelId: 'wmx-label-'+hash
 	     });
 	     
-	if( labelContent ) 
-		wmx.addLabel( marker, labelContent );
+	if(labelContent) 
+		wmx.addLabel(marker, labelContent);
 	     
-	wmx.markers.push( marker );
+	wmx.markers.push(marker);
 	
 	google.maps.event.addListener(
 	    marker,
 	    'drag',
 	    function() {
-	    
 	    	marker.setIcon(wmx.mapImages.selected);
-	    	
 	    }
 	);
 	
@@ -80,11 +76,9 @@ wmx.addMarker = function(position, address, labelContent, icon) {
 	    marker,
 	    'dragend',
 	    function() {
-	    
 	    	marker.setIcon(wmx.mapImages.icon);
 	        jQuery('#wmx-long-hover').val( position.lng() );
 	        jQuery('#wmx-lat-hover').val( position.lat() );
-	        
 	    }
 	);
 	
@@ -99,22 +93,19 @@ wmx.addMarker = function(position, address, labelContent, icon) {
 	        wmx.selectedMarker = marker;
 	        
 	        jQuery('#wmx-marker-dialog').dialog({
-	        
-	        	modal: 			true, 
-	        	resizable: 		false,
-	        	width: 			'auto',
-	        	height: 		'auto',
-	        	buttons: 		{
-	        	
-	        		"Done": 	function() {
+	        	modal: true, 
+	        	resizable: false,
+	        	width: 'auto',
+	        	height: 'auto',
+	        	buttons: {
+	        		Done: function() {
 	        		
 	        			marker.set('address', jQuery('#mwx-marker-address-input').val() )
 	        			jQuery(this).dialog( "close" );
 	        			
-	        		}
-	        					
+	        		}			
 	        	},
-	        	open: 			function(e, ui) {
+	        	open: function(e, ui) {
 	        	
 	        		jQuery('#wmx-marker-label-input').val( marker.get('labelContent') );
 	        		jQuery('#mwx-marker-address-input').val( marker.get('address') );
@@ -122,9 +113,7 @@ wmx.addMarker = function(position, address, labelContent, icon) {
 	        	}
 	        		        	
 	        });
-	        
 	    }
-	    
 	);
 	
 }
@@ -191,7 +180,7 @@ wmx.getGeocode = function(address, callback) {
    				
    			if(status == "ZERO_RESULTS")
    			{
-   				alert(wmx.txt._('WEEVERMAPS2_ERROR_NO_RESULTS')+address);
+   				alert(wmx.txt._('WEEVERMAPS_ERROR_NO_RESULTS')+address);
    			}
    		
    		}
@@ -251,7 +240,6 @@ wmx.setMarkerIcon = function(el) {
 };
 
 wmx.mapImages = {
-
 	icon: new google.maps.MarkerImage(
 	                'http://weeverapp.com/media/sprites/default-marker.png',
 	                new google.maps.Size(32, 37),
@@ -267,12 +255,11 @@ wmx.mapImages = {
 	                new google.maps.Size(64, 37)
 	              ),
 	pin: new google.maps.MarkerImage(
-	                '/media/plg_WEEVERMAPS2/images/point.png',
+	                '/media/plg_weevermaps/images/point.png',
 	                new google.maps.Size(32, 31),
 	                new google.maps.Point(0,0),
 	                new google.maps.Point(16, 31)
-	              )        
-	                    
+	              )              
 }
 
 wmx.newMarkerImage = function(spriteUrl) {
@@ -288,90 +275,6 @@ wmx.newMarkerImage = function(spriteUrl) {
 }
 
 wmx.latLongBounds 	= new google.maps.LatLngBounds();
-
-wmx.clearMap = function() {
-
-	if( !!!wmx.markers )
-		return;
-
-	for( var i=0; i<wmx.markers.length; i++ ) {
-	
-		wmx.markers[i].setMap( null );
-		
-	}
-	
-	wmx.markers = [];
-	
-	!!wmx.KmlLayer && wmx.KmlLayer.setMap( null );
-	
-	wmx.latLongBounds 	= new google.maps.LatLngBounds();
-
-}
-
-wmx.getRemoteSettings	= function(callback) {
-
-	var xmlhttp 		= new XMLHttpRequest(),
-		xmlhttpCall		= Joomla.comWeeverConst.server + "api/v2/tabs/get_geo?tab_id=" + wmx.remoteId + "&app_key=" + wmx.remoteKey,
-		geo,
-		geoCallback		= function( responseText ) {
-		
-			geo = JSON.parse( responseText ).geo || null;
-			
-			if( !geo )
-				return;
-				
-			if( !geo instanceof Array )
-				geo = [geo];
-				
-			for( i = 0; i < geo.length; i++ ) {
-			
-				if( !!geo[i].kml ) {
-				 
-					jQuery('#wmx-kml-url').val( geo[i].kml );
-					 
-					wmx.KmlLayer = new google.maps.KmlLayer( jQuery('#wmx-kml-url').val() );
-					
-					wmx.KmlLayer.setMap( wmx.map );
-					
-				}
-
-				if( !geo[i].latitude && !geo[i].longitude )
-					continue;
-			
-				wmx.addMarker( 
-				
-					new google.maps.LatLng( 
-					
-						geo[i].latitude, 
-						geo[i].longitude
-						
-					),
-					null, // address line (unused)
-					geo[i].label,
-					wmx.newMarkerImage( geo[i].marker_url )						
-				
-				);
-				
-				wmx.latLongBounds.extend( new google.maps.LatLng( geo[i].latitude, geo[i].longitude) );
-				
-				setTimeout( callback, 350 );
-
-			}
-		
-		};
-	
-	xmlhttp.open("GET", xmlhttpCall );	
-	xmlhttp.send();
-
-
-	xmlhttp.onreadystatechange = function()	{
-	
-		if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) 
-			geoCallback( xmlhttp.responseText );
-		
-	}
-
-}
 
 wmx.getSettings = function() {
 
@@ -394,7 +297,7 @@ wmx.getSettings = function() {
 		labelArray 	= jQuery( label ).val().split( _dl ),
 		markArray 	= jQuery( markerId ).val().split( _dl );
 
-	for( i=0; i < latArray.length; i++ ) {
+	for( i=0; i<latArray.length; i++ ) {
 	
 		if(!latArray[i] && !longArray[i])
 			continue;
@@ -409,72 +312,11 @@ wmx.getSettings = function() {
 
 }
 
-wmx.confirmCloseDialog = function() {
-
-	return confirm( wmx.txt._('WEEVERMAPS2_CONFIRM_CLOSE') );
-
-}
-
-wmx.saveRemoteSettings = function( saveCallback ) {
-
-	var geo 			= [],
-		xmlhttp 		= new XMLHttpRequest(),
-		xmlhttpCall		= Joomla.comWeeverConst.server + "api/v2/tabs/set_geo?tab_id=" + wmx.remoteId + "&app_key=" + wmx.remoteKey;
-
-	wmx.safeClose = true;
-	
-	if( wmx.markers === undefined )
-		return true;
-		
-	for( i=0; i<wmx.markers.length; i++ ) {
-	
-		marker 	= wmx.markers[i];
-		geo[i]	= {};
-		
-		geo[i].latitude 	= marker.position.lat();
-		geo[i].longitude 	= marker.position.lng();
-		geo[i].label		= marker.labelContent;
-		geo[i].marker_url	= marker.icon.url;
-		
-		if( jQuery('#wmx-kml-url').val() ) {
-		
-			geo[i].kml = jQuery('#wmx-kml-url').val();
-			
-			jQuery('#wmx-kml-url').val( null );
-		
-		}
-	
-	}
-	
-	geoJson	= JSON.stringify( geo );
-	
-	if( !!geo.length )
-		xmlhttpCall		+= "&geo=" + geoJson;
-	else 
-		xmlhttpCall		+= "&geo=";
-	
-	xmlhttp.open("GET", xmlhttpCall );	
-	xmlhttp.send();
-	
-	jQuery('#wx-modal-error-text').html('');
-	jQuery('#wx-modal-loading').fadeIn(200);
-	jQuery('#wx-modal-loading-text').html(Joomla.JText._('WEEVER_JS_SAVING_CHANGES'));
-	jQuery('#wx-modal-secondary-text').html(Joomla.JText._('WEEVER_JS_PLEASE_WAIT'));
-
-	xmlhttp.onreadystatechange = function()	{
-	
-		if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ) 
-			saveCallback( xmlhttp.responseText );
-		
-	}
-
-}
-
 wmx.saveSettings = function() {
 
 	wmx.safeClose = true;
 	
-	if( wmx.markers === undefined )
+	if(wmx.markers === undefined)
 		return true;
 		
 	var latitude 	= wmx.inputField.latitude,
@@ -488,17 +330,18 @@ wmx.saveSettings = function() {
 
 	for( i=0; i<wmx.markers.length; i++ ) {
 	
-		marker		= wmx.markers[i];
-		latVal 		= latVal + marker.position.lat() + _dl;
-		longVal 	= longVal + marker.position.lng() + _dl;
+		marker = wmx.markers[i];
 		
-		if( marker.address != null )
+		latVal = latVal + marker.position.lat() + _dl;
+		longVal = longVal + marker.position.lng() + _dl;
+		
+		if(marker.address != null)
 			addVal = addVal + marker.address.replace(/;/, "") + _dl;
 		else   
 			addVal = addVal  + _dl;
 			
-		labelVal 	= labelVal + marker.labelContent.replace(/;/, "") + _dl;
-		markVal 	= markVal + marker.icon.url + _dl;
+		labelVal = labelVal + marker.labelContent.replace(/;/, "") + _dl;
+		markVal = markVal + marker.icon.url + _dl;
 	
 	}
 	
@@ -511,185 +354,5 @@ wmx.saveSettings = function() {
 
 }
 
-wmx.openWindow		= function(e) {
 
-	e.preventDefault();
-			
-	// if the class has been removed, do not continue
-	if( !jQuery(this).hasClass(wmx.trigger.replace(".","")) )
-		return;
-		
-	wmx.newTab = false;
-		
-	if( jQuery(this).hasClass("wx-geotag-new-item") )
-		wmx.newTab = true;	
-	
-	var me = this;
-
-	var loadDialog = function() {
-				
-		var	myOptions = {
-		
-	          center: 		new google.maps.LatLng(43.243603, -79.889074),
-	          zoom: 		5,
-	          mapTypeId:	google.maps.MapTypeId.ROADMAP
-	          
-	    };
-		        
-		if(wmx.map instanceof google.maps.Map)
-		{
-		
-			callback = function() {
-			
-				google.maps.event.trigger(wmx.map, 'resize');
-				wmx.map.fitBounds(wmx.latLongBounds);
-				
-				var zoom = wmx.map.getZoom();
-				
-				wmx.map.setZoom( zoom > wmx.maxZoom ? wmx.maxZoom : zoom );
-				
-			};
-			
-			if( !!wmx.remoteSource ) {
-			
-				wmx.remoteId = jQuery(me).attr( 'id' ).replace( wmx.remoteIdPrefix, "" );
-				wmx.getRemoteSettings(callback);
-			
-			}
-			
-			else {
-			
-				setTimeout( callback, 350 );
-				
-			}
-			
-			
-		}
-		else 
-		{
-			
-			wmx.map = new google.maps.Map(document.getElementById("wmx-map"), myOptions);
-			
-			var callback = function() {
-			
-				google.maps.event.trigger(wmx.map, 'resize');
-				wmx.map.fitBounds(wmx.latLongBounds);
-				
-				var zoom = wmx.map.getZoom();
-				
-				wmx.map.setZoom( zoom > wmx.maxZoom ? wmx.maxZoom : zoom );
-				
-			};
-			
-			if( !!wmx.remoteSource ) {
-			
-				wmx.remoteId = jQuery(me).attr( 'id' ).replace( wmx.remoteIdPrefix, "" );
-				wmx.getRemoteSettings(callback);
-				
-			} else {
-			
-				wmx.getSettings();
-				
-			}
-			
-		}
-			
-		google.maps.event.addListener(wmx.map, 'mousemove', function(event) {
-		
-			document.getElementById('wmx-lat-hover').value = event.latLng.lat();
-			document.getElementById('wmx-long-hover').value = event.latLng.lng();
-		
-		}); 
-		
-		google.maps.event.addListener(wmx.map, 'click', function(event) {
-		
-			wmx.addMarker(event.latLng);
-			
-		}); 
-		
-	}
-	
-
-	jQuery("#wmx-dialog").dialog({
-	
-		modal: 			true, 
-		resizable: 		false,
-		width: 			'auto',
-		height: 		'auto',
-		buttons: 		{
-		
-			"Cancel": 			function() {
-			
-				var me = this;
-			
-				if( !wmx.confirmCloseDialog() )
-					return;
-				
-				else {
-				
-					wmx.clearMap();
-					
-					wmx.safeClose = true;
-					
-					setTimeout( function() {
-					
-						jQuery(me).dialog( "close" );
-					
-					}, 125);
-					
-				}
-			
-				
-				
-			},
-			"Save Changes": 	function() {
-			
-				if( !!wmx.remoteSource && !wmx.newTab ) {
-				
-					var me = this;
-									
-					wmx.saveRemoteSettings( function( responseText ) {
-
-						wmx.clearMap();
-
-						jQuery(me).dialog( "close" );
-						
-						wmx.safeClose = false;
-						
-						jQuery('#wx-modal-secondary-text').html(Joomla.JText._('WEEVER_JS_APP_UPDATED'));
-						setTimeout("document.location.reload(true);",20);
-					
-					});
-					
-					return;
-					
-				}
-				else if( !!wmx.newTab ) {
-				
-					jQuery(this).dialog( "close" );
-					
-					wmx.safeClose = false;
-				
-				}
-					
-				wmx.saveSettings();
-					
-				jQuery(this).dialog( "close" );
-				
-				wmx.safeClose = false;
-				
-			}
-					
-		},
-		open: 			loadDialog(),
-		beforeClose: 	function() {
-		
-			if(!!wmx.safeClose)
-				return true;
-		
-		}
-		
-	}); 
-
-}
 
