@@ -38,8 +38,8 @@ class plgContentWeeverMaps extends JPlugin {
 	
 	private		$geoData;
 	private		$inputString				= array(
-													'longitude' => 0,
-													'latitude' 	=> 0,
+													'longitude' => null,
+													'latitude' 	=> null,
 													'address'	=> null,
 													'label'		=> null,
 													'marker'	=> null,
